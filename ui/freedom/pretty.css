@@ -76,7 +76,11 @@ div#header, div#footer {
     font-family: Verdana, Helvetica, sans-serif;}
 div#footer { color: #969696; }
 div#header {
-    line-height: 1px;}
+    line-height: 1px;
+    background-image:url(logo.png);
+    background-repeat:no-repeat;
+    background-position:right 5px bottom 6px;
+    }
 
 div#footer {font-size: 12px; font-weight: lighter; 
     padding: .5em 0;

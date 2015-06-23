@@ -350,10 +350,6 @@ ul.auto-toc {
       type="text/css" media="print" id="slidePrint" />
 <link rel="stylesheet" href="ui/freedom/opera.css"
       type="text/css" media="projection" id="operaFix" />
-
-<style type="text/css">
-#currentSlide {display: none;}
-</style>
 </head>
 <body>
 <div class="layout">
@@ -407,7 +403,6 @@ ul.auto-toc {
 <li>更高效的虚拟化</li>
 <li>更轻松的迁移和扩展</li>
 <li>更简单的管理</li>
-<li>对比传统虚拟机总结</li>
 </ul>
 <table border="1" class="incremental docutils">
 <caption>Docker VS VM</caption>
@@ -453,16 +448,11 @@ ul.auto-toc {
 <h1>AUFS</h1>
 <div class="handout container">
 git</div>
-<div class="highlight" style="background: #272822"><pre style="line-height: 125%">联合文件系统（UnionFS）是一种分层、轻量级并且高性能的文件系统，它支持对文件系统的修改作为一次提交来一层层的叠加，同时可以将不同目录挂载到同一个虚拟文件系统下<span style="color: #f92672">(</span>unite several directories into a single virtual filesystem<span style="color: #f92672">)</span>。
-
-联合文件系统是 Docker 镜像的基础。镜像可以通过分层来进行继承，基于基础镜像（没有父镜像），可以制作各种具体的应用镜像。
-
-另外，不同 Docker 容器就可以共享一些基础的文件系统层，同时再加上自己独有的改动层，大大提高了存储的效率。
-
-Docker 中使用的 AUFS（AnotherUnionFS）就是一种联合文件系统。 AUFS 支持为每一个成员目录（类似 Git 的分支）设定只读（readonly）、读写（readwrite）和写出（whiteout-able）权限, 同时 AUFS 里有一个类似分层的概念, 对只读权限的分支可以逻辑上进行增量地修改<span style="color: #f92672">(</span>不影响只读部分的<span style="color: #f92672">)</span>。
-
-Docker 目前支持的联合文件系统种类包括 AUFS, btrfs, vfs 和 DeviceMapper。
-</pre></div>
+<p class="small"><span class="incremental">联合文件系统（UnionFS）</span> 是一种分层、轻量级并且高性能的文件系统，它支持对文件系统的修改作为一次提交来一层层的叠加，同时可以将不同目录挂载到同一个虚拟文件系统下(unite several directories into a single virtual filesystem)。</p>
+<p class="small">联合文件系统是 Docker 镜像的基础。镜像可以通过分层来进行继承，基于基础镜像（没有父镜像），可以制作各种具体的应用镜像。</p>
+<p class="small">另外，不同 Docker 容器就可以共享一些基础的文件系统层，同时再加上自己独有的改动层，大大提高了存储的效率。</p>
+<p class="small">Docker 中使用的 AUFS（AnotherUnionFS）就是一种联合文件系统。 AUFS 支持为每一个成员目录（类似 Git 的分支）设定只读（readonly）、读写（readwrite）和写出（whiteout-able）权限, 同时 AUFS 里有一个类似分层的概念, 对只读权限的分支可以逻辑上进行增量地修改(不影响只读部分的)。</p>
+<p class="small">Docker 目前支持的联合文件系统种类包括 AUFS, btrfs, vfs 和 DeviceMapper。</p>
 </div>
 <div class="slide" id="id1">
 <h1>名词</h1>
@@ -471,7 +461,7 @@ Docker 目前支持的联合文件系统种类包括 AUFS, btrfs, vfs 和 Device
 <li></li>
 </ul>
 </div>
-<ul class="incremental takahashi6 simple">
+<ul class="incremental takahashi2 simple">
 <li>镜像 <span class="incremental">images</span></li>
 <li>容器 <span class="incremental">container</span></li>
 <li>仓库 <span class="incremental">registry</span></li>
@@ -479,13 +469,14 @@ Docker 目前支持的联合文件系统种类包括 AUFS, btrfs, vfs 和 Device
 </div>
 <div class="slide" id="id2">
 <h1>常用命令</h1>
-<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #f8f8f2">docker</span> <span style="color: #f8f8f2">[run</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">start</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">stop</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">restart</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">kill</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">rm</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">pause</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">unpause]</span> <span style="color: #75715e"># 容器生命周期管理</span>
-<span style="color: #f8f8f2">docker</span> <span style="color: #f8f8f2">[ps</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">inspect</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">top</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">attach</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">events</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">logs</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">wait</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">export</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">port]</span> <span style="color: #75715e">#容器操作运维</span>
-<span style="color: #f8f8f2">docker</span> <span style="color: #f8f8f2">[commit</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">cp</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">diff]</span> <span style="color: #75715e">#容器rootfs命令</span>
-<span style="color: #f8f8f2">docker</span> <span style="color: #f8f8f2">[login</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">pull</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">push</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">search]</span> <span style="color: #75715e">#镜像仓库</span>
-<span style="color: #f8f8f2">docker</span> <span style="color: #f8f8f2">[images</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">rmi</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">tag</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">build</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">history</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">save</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">import]</span> <span style="color: #75715e">#本地镜像管理</span>
-<span style="color: #f8f8f2">docker</span> <span style="color: #f8f8f2">[info</span><span style="color: #f92672">|</span><span style="color: #f8f8f2">version]</span> <span style="color: #75715e">#其他命令</span>
-</pre></div>
+<pre class="code bash literal-block">
+docker <span class="operator">[</span>run|start|stop|restart|kill|rm|pause|unpause<span class="operator">]</span> <span class="comment"># 容器生命周期管理
+</span>docker <span class="operator">[</span>ps|inspect|top|attach|events|logs|wait|export|port<span class="operator">]</span> <span class="comment">#容器操作运维
+</span>docker <span class="operator">[</span>commit|cp|diff<span class="operator">]</span> <span class="comment">#容器rootfs命令
+</span>docker <span class="operator">[</span>login|pull|push|search<span class="operator">]</span> <span class="comment">#镜像仓库
+</span>docker <span class="operator">[</span>images|rmi|tag|build|history|save|import<span class="operator">]</span> <span class="comment">#本地镜像管理
+</span>docker <span class="operator">[</span>info|version<span class="operator">]</span> <span class="comment">#其他命令</span>
+</pre>
 </div>
 <div class="slide" id="id3">
 <h1>图示</h1>
@@ -495,37 +486,20 @@ Docker 目前支持的联合文件系统种类包括 AUFS, btrfs, vfs 和 Device
 </div>
 <div class="slide" id="dockerfile">
 <h1>Dockerfile</h1>
-<div class="highlight" style="background: #272822"><pre style="line-height: 125%">FROM java:openjdk-7u65-jdk
-RUN apt-get update <span style="color: #f92672">&amp;&amp;</span> apt-get install -y wget git curl zip <span style="color: #f92672">&amp;&amp;</span> rm -rf /var/lib/apt/lists/*
-ENV JENKINS_HOME /var/jenkins_home
-<span style="color: #75715e"># Jenkins is ran with user `jenkins`, uid = 1000</span>
-<span style="color: #75715e"># If you bind mount a volume from host/vloume from a data container,</span>
-<span style="color: #75715e"># ensure you use same uid</span>
-RUN useradd -d <span style="color: #e6db74">&quot;</span><span style="color: #f8f8f2">$JENKINS_HOME</span><span style="color: #e6db74">&quot;</span> -u <span style="color: #ae81ff">1000</span> -m -s /bin/bash jenkins
-<span style="color: #75715e"># Jenkins home directoy is a volume, so configuration and build history</span>
-<span style="color: #75715e"># can be persisted and survive image upgrades</span>
-VOLUME /var/jenkins_home
-<span style="color: #75715e"># `/usr/share/jenkins/ref/` contains all reference configuration we want</span>
-<span style="color: #75715e"># to set on a fresh new installation. Use it to bundle additional plugins</span>
-<span style="color: #75715e"># or config file with your custom jenkins Docker image.</span>
-RUN mkdir -p /usr/share/jenkins/ref/init.groovy.d
-COPY init.groovy /usr/share/jenkins/ref/init.groovy.d/tcp-slave-agent-port.groovy
-ENV JENKINS_VERSION 1.596.2
-<span style="color: #75715e"># could use ADD but this one does not check Last-Modified header</span>
-<span style="color: #75715e"># see https://github.com/docker/docker/issues/8331</span>
-RUN curl -L http://mirrors.jenkins-ci.org/war-stable/<span style="color: #f8f8f2">$JENKINS_VERSION</span>/jenkins.war -o /usr/share/jenkins/jenkins.war
-ENV JENKINS_UC https://updates.jenkins-ci.org
-RUN chown -R jenkins <span style="color: #e6db74">&quot;</span><span style="color: #f8f8f2">$JENKINS_HOME</span><span style="color: #e6db74">&quot;</span> /usr/share/jenkins/ref
-<span style="color: #75715e"># for main web interface:</span>
-EXPOSE 8080
-<span style="color: #75715e"># will be used by attached slave agents:</span>
-EXPOSE 50000
-USER jenkins
-COPY jenkins.sh /usr/local/bin/jenkins.sh
-ENTRYPOINT <span style="color: #f92672">[</span><span style="color: #e6db74">&quot;/usr/local/bin/jenkins.sh&quot;</span><span style="color: #f92672">]</span>
-<span style="color: #75715e"># from a derived Dockerfile, can use `RUN plugin.sh active.txt` to setup /usr/share/jenkins/ref/plugins from a support bundle</span>
-COPY plugins.sh /usr/local/bin/plugins.sh
-</pre></div>
+<pre class="code bash literal-block">
+FROM 10.10.107.16:5000/ruby:2.2.2
+RUN gem sources --remove https://rubygems.org/ <span class="operator">&amp;&amp;</span> gem <span class="name builtin">source</span> -a https://ruby.taobao.org/
+ENV www /www
+ENV <span class="name variable">OA_CORE_MODULE_PATH</span><span class="operator">=</span><span class="literal string double">&quot;/src/ciprun-oa-basic&quot;</span> <span class="name variable">OA_CLOUD_STORAGE_HOST</span><span class="operator">=</span><span class="literal string single">'172.16.22.8'</span> <span class="name variable">OA_CLOUD_STORAGE_PASSWORD</span><span class="operator">=</span><span class="literal string single">'ciprun'</span> <span class="name variable">RAILS_ENV</span><span class="operator">=</span><span class="literal string single">'production'</span> <span class="name variable">SECRET_KEY_BASE</span><span class="operator">=</span><span class="literal string single">'49f9face71a......abaeb'</span> <span class="name variable">RAILS_SERVE_STATIC_FILES</span><span class="operator">=</span><span class="literal string single">'true'</span> <span class="name variable">OA_DOMAIN</span><span class="operator">=</span><span class="literal string single">'10.10.107.15'</span> <span class="name variable">OA_SSO</span><span class="operator">=</span><span class="literal string single">'10.10.107.15:3100'</span>
+RUN mkdir /www <span class="operator">&amp;&amp;</span> <span class="name builtin">cd</span> /www
+WORKDIR <span class="keyword">${</span><span class="name variable">www</span><span class="keyword">}</span>
+ADD ciprun-oa-basic/ /src/ciprun-oa-basic
+ADD zxr_sso/ <span class="keyword">${</span><span class="name variable">www</span><span class="keyword">}</span>
+RUN sed -i <span class="literal string single">'s/rubygems.org/ruby.taobao.org/g'</span> Gemfile
+RUN bundle install <span class="operator">&amp;&amp;</span> bundle <span class="name builtin">exec </span>rake assets:precompile <span class="name variable">RAILS_ENV</span><span class="operator">=</span>production
+EXPOSE 3100
+CMD rails s -p 3100 -b 0.0.0.0
+</pre>
 </div>
 <div class="slide" id="id4">
 <h1>持续集成</h1>
@@ -534,13 +508,19 @@ COPY plugins.sh /usr/local/bin/plugins.sh
 </blockquote>
 </div>
 <div class="slide" id="id5">
-<h1>做法</h1>
+<h1>挑选</h1>
+<ul class="takahashi2 incremental simple">
+<li>kubernetes</li>
+<li>compose</li>
+<li>swarn</li>
+<li>mesos+marathon</li>
+</ul>
 </div>
 <div class="slide" id="id6">
 <h1>要做的事</h1>
 <ul class="takahashi2 simple">
 <li>Test <span class="fuchsia">ENV</span> as a service</li>
-<li>Jenkins 集成</li>
+<li>Jenkins &amp; MQ 集成</li>
 </ul>
 </div>
 <div class="slide" id="id7">

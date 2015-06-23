@@ -12,3 +12,6 @@
 .container .current{
 	display:block;
 }
+.small{
+    font-size:24px;
+}
